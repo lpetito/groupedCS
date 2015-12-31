@@ -24,13 +24,15 @@ gen.data.fixed.Rd(n, k, Cs, true.F, alpha=1, beta=1)
 }
 \value{
 This function returns a data frame with the following columns:
-1) Cs: individual observation times 
-2) groups: group identifier
-3) initial.p: initial values for the EM-PAV hybrid algorithm
-4) delta.ind: indicator of event (1) or censoring (0) - true test result
-5) y.ind: misclassified test result 
-6) delta.group: true group test result, indicator that at least one individual had delta.ind==1
-7) y.group: misclassified group test result
+\tabular{ll}{
+Cs: \tab individual observation times \cr
+groups: \tab group identifier\cr
+initial.p: \tab initial values for the EM-PAV hybrid algorithm\cr
+delta.ind: \tab indicator of event (1) or censoring (0) - true test result\cr
+y.ind: \tab misclassified test result\cr
+delta.group: \tab true group test result, indicator that at least one individual had delta.ind==1\cr
+y.group: \tab misclassified group test result\cr
+}
 }
 \references{
 %% ~put references to the literature/web site here ~

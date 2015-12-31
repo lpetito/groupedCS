@@ -39,14 +39,16 @@ Specificity: probability of a negative test results given that the individual is
 }
 \value{
 This returns a data frame with the following columns:
-1) groups: group identifier
-2) Ts: true individual event times
-3) Cs: individual observation times 
-4) delta.ind: indicator of event (1) or censoring (0) - true test result
-5) y.ind: misclassified test result 
-6) delta.group: true group test result, indicator that at least one individual had delta.ind==1
-7) y.group: misclassified group test result
-8) initial.p: initial values for the EM-PAV hybrid algorithm
+\tabular{ll}{
+groups: \tab group identifier\cr
+Ts: \tab true individual event times\cr
+Cs: \tab individual observation times\cr 
+delta.ind: \tab indicator of event (1) or censoring (0) - true test result\cr
+y.ind: \tab misclassified test result\cr
+delta.group: \tab true group test result, indicator that at least one individual had delta.ind==1\cr
+y.group: \tab misclassified group test result\cr
+initial.p: \tab initial values for the EM-PAV hybrid algorithm\cr
+}
 }
 \references{
 %% ~put references to the literature/web site here ~
