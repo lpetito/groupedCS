@@ -21,7 +21,7 @@ License: \tab GPL-3\cr
 Author and Maintainer: Lucia Petito <lucia.petito@gmail.com>
 }
 \seealso{
-\code{\link{hybrid.em.pav}}, \code{\link{pava.cs.mc}}, \code{\link{gen.data.weibull.unif}}
+\code{\link{gen.data.weibull.unif}}, \code{\link{gen.data.fixed}}, \code{\link{hybrid.em.pav}}, \code{\link{pava.cs}}, \code{\link{simulation.random}}, \code{\link{simulation.fixed}}
 }
 \examples{
 #For a detailed example of how the code is used, see vingette.
