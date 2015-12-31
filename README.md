@@ -4,9 +4,8 @@ Code written to facilitate simulations in paper "Misclassified Group Tested Curr
 
 ## Installation
 
-Use R package devtools (developed by Hadley Wickham) to install this package from this git repo:
+Use the R package devtools (developed by Hadley Wickham) to install this package after downloading 
+from this git repo.
 
-library(devtools)
-devtools::install_github("lpetito/groupedCS")
 
 
