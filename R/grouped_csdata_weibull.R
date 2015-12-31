@@ -156,10 +156,10 @@ hybrid.em.pav <- function(data, initial.p, threshold=0.01, alpha=1, beta=1){
 }
 
 ##########
-### Create simulation function
+### Create simulation function for Weibull-Uniform data
 ##########
 
-simulation <- function(n, k, shape, scale, quantile, x, alpha=1, beta=1, t=0.01){
+simulation.random <- function(n, k, shape, scale, quantile, x, alpha=1, beta=1, t=0.01){
   data <- gen.data.weibull.unif(n, k, shape, scale, quantile, alpha, beta)
   desc.ind <- with(data, xtabs(~delta.ind + y.ind))
   desc.group <- with(data, xtabs(~delta.group + y.group)) / k
@@ -182,6 +182,39 @@ simulation <- function(n, k, shape, scale, quantile, x, alpha=1, beta=1, t=0.01)
   }
   result <- stepfun(data$Cs, c(0, ind.result), right=F)
   ind.res <- result(Cs)
+  
+  return(list(desc.ind = desc.ind, desc.group = desc.group,
+              num.it = num.it,
+              ind.result = ind.res,
+              group.result = group.res))
+}
+
+##########
+### Create simulation function for fixed data
+##########
+
+simulation.fixed <- function(n, k, Cs, true.F, alpha, beta, t){
+  data <- createdata.across(n, k, Cs, true.F, alpha, beta)
+  desc.ind <- with(data, xtabs(~delta.ind + y.ind + Cs))
+  desc.group <- with(data, xtabs(~delta.group + y.group + Cs)) / k
+  #For grouped data
+  group.result <- hybrid.em.pav(data, data$initial.p, t, alpha, beta)
+  num.it <- group.result$num.iterations
+  diff <- group.result$diff
+  temp <- data.frame(Cs = data$Cs, group.result = group.result$result)
+  temp <- temp[order(temp$Cs),]
+  result <- stepfun(temp$Cs, c(0, temp$group.result), right=F)
+  group.res <- result(Cs)
+  #For individual data
+  data <- data[order(data$Cs),]
+  if (alpha == 1 & beta ==1){
+    ind.result <- with(data, pava.cs(Cs, delta.ind))
+  }
+  else {
+    ind.result <- with(data, pava.cs.mc(Cs, y.ind, alpha, beta))
+  }
+  result <- stepfun(data$Cs, c(0, ind.result), right=F)
+  ind.res <- result(unique(data$Cs))
   
   return(list(desc.ind = desc.ind, desc.group = desc.group,
               num.it = num.it,
