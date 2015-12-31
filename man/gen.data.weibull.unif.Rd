@@ -54,13 +54,11 @@ This returns a data frame with the following columns:
 \author{
 Lucia Petito
 }
-\note{
-This data generating function is meant to be used in conjunction with the functions 
-}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
+\code{\link{gen.data.fixed}}
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{

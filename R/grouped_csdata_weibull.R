@@ -49,6 +49,52 @@ gen.data.weibull.unif <- function(n, k, shape, scale, quantile = 0.99, alpha = 1
   }
 }
 
+##########
+### Generate data from a fixed prespecified distribution, then censor on a fixed number of points
+##########
+
+gen.data.fixed <- function(n, k, Cs, true.F, alpha=1, beta=1){
+  require(gtools)
+  data <- data.frame(Cs = permute(rep(Cs, times=n/length(unique(Cs)))),
+                     delta.ind = rep(-9, times=n))
+  data <- data[order(data$Cs),]
+  for(i in unique(data$Cs)){
+    j <- which(Cs == i)
+    data$delta.ind[data$Cs==i] <- rbinom(sum(data$Cs==i), 1, true.F[j])
+  }
+  data <- data[order(data$Cs, data$delta.ind),]
+  initial.p <- runif(n)
+  data$initial.p <- initial.p[order(initial.p)]
+  #Allow grouping to happen across Cs
+  data$groups <- permute(rep(1:ceiling(n / k), length.out = n))
+  data <- data[,c(1,4,3, 2)]
+  data <- data[order(data$groups, data$delta.ind),]
+  data$y.ind <- sapply(1:n, FUN = function(x) {
+    ifelse(data$delta.ind[x]==1,
+           rbinom(1, 1, alpha), rbinom(1, 1, 1-beta))
+  })
+  
+  Delta.groups <- sapply(1:ceiling(n/k), FUN = function(X){
+    #Subset the data to just that group
+    temp <- data$delta[data$groups==X]
+    #Determine if it is positive or negative
+    truth <- ifelse(sum(temp) != 0, 1, 0)
+    #Introduce misclassification: if 
+    deltamc <- ifelse(truth == 1, #logical statement evaluated
+                      rbinom(1, 1, prob = alpha), #command evaluated if true
+                      rbinom(1, 1, prob = 1 - beta)) #command evaluated if false
+    #Return a vector of true delta and (potentially) misclassified Y
+    c(truth, deltamc)
+  })
+  #Assign and save the true Deltas for the groups
+  data$delta.group <- Delta.groups[1,data$groups]
+  #Assign and save the misclassified Ys for the groups
+  data$y.group <- Delta.groups[2,data$groups]
+  data <- data[order(data$groups, data$Cs),]
+  rownames(data) <- 1:n
+  return(data) 
+}
+
 #PAVA for individual data
 pava.cs <- function(Cs, initial){
   require(isotone)
