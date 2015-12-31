@@ -1,0 +1,9 @@
+Package: groupedCS
+Type: Package
+Title: Simulations to supplement the paper "Misclassified Grouped Current Status Data"
+Version: 1.0
+Date: 2015-12-17
+Author: Lucia Petito
+Maintainer: Lucia Petito <lucia.petito@gmail.com>
+Description: Provides functions to replicate simulations done for paper. This includes data generation, the algorithm, and the simulation itself.
+License: GPL-3
