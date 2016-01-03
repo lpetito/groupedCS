@@ -7,3 +7,6 @@ Author: Lucia Petito
 Maintainer: Lucia Petito <lucia.petito@gmail.com>
 Description: Provides functions to replicate simulations done for paper. This includes data generation, the algorithm, and the simulation itself.
 License: GPL-3
+Imports:
+	gtools,
+	isotone
